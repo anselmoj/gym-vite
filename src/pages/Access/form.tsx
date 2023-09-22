@@ -20,7 +20,8 @@ import {
   Title,
 } from './styles'
 import { useReduxDispatch } from '../../hooks/useReduxDispatch'
-import { athleteActions } from '../../store/slices/athlete'
+import { athleteActions, athleteSelectors } from '../../store/slices/athlete'
+import { useReduxSelector } from '../../hooks/useReduxSelector'
 
 export interface FormDataProps {
   gym_student_id: number
@@ -51,8 +52,8 @@ const AccessFormWithRef: ForwardRefRenderFunction<
   const [hideModal, setHideModal] = useState<boolean>(false)
   const inputSelectRef = useRef<InputSelectRefProps>(null)
   const inputTypeRef = useRef<InputBaseRefProps>(null)
-  const [infoAccess, setInfoAccess] = useState<IAccessList[]>([])
-  console.log('infoAccess', infoAccess)
+  const athlete = useReduxSelector(athleteSelectors.selectAthlete)
+  console.log('athlete', athlete)
 
   const openModal = useCallback(() => {
     setHideModal(false)
@@ -120,7 +121,7 @@ const AccessFormWithRef: ForwardRefRenderFunction<
               <Items>
                 <InputSelect
                   ref={inputSelectRef}
-                  options={infoAccess}
+                  options={athlete}
                   label="Atletas"
                 />
               </Items>

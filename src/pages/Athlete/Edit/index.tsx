@@ -13,7 +13,6 @@ export default function AthleteEdit() {
   const params = useParams()
   const formRef = useRef<FormRefProps>(null)
   const athletes = useReduxSelector(athleteSelectors.showData)
-  console.log('athletes', athletes)
   const [currentAthlete, setCurrentAthlete] = useState<IAthlete>({} as IAthlete)
 
   const handleGetAthlete = useCallback(() => {
