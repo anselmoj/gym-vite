@@ -1,8 +1,9 @@
 import { all } from 'redux-saga/effects'
-import userSagas from './slices/athlete/sagas'
+import athleteSagas from './slices/athlete/sagas'
+import accessSagas from './slices/access/sagas'
 
 function* rootSagas() {
-  yield all([userSagas])
+  yield all([athleteSagas, accessSagas])
 }
 
 export default rootSagas

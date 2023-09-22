@@ -3,9 +3,9 @@ import { accessActions } from '..'
 import list from './list'
 import create from './create'
 
-const sagas = all([
+const accessSagas = all([
   takeLatest(accessActions.listRequest, list),
   takeLatest(accessActions.createRequest, create),
 ])
 
-export default sagas
+export default accessSagas

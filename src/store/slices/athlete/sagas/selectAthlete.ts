@@ -11,9 +11,12 @@ interface ListSelectAthleteRequestQuery {
 
 interface ListSelectAthleteResponse {
   list: {
+    gender: string
+    is_active: boolean
     name: string
     id: number
   }[]
+  total_pages: number
 }
 
 export default function* select(

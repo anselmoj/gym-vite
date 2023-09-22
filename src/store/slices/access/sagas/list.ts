@@ -27,14 +27,12 @@ export default function* list(action: PayloadAction<IListAccessRequestAction>) {
     const params: ListAccessRequestQuery = {
       page: action.payload.data.page,
     }
-    console.log('params', params)
 
     const response: AxiosResponse<ListAccessResponse> = yield call(
       httpClient.get,
       'http://localhost:3334/access',
       { params },
     )
-    console.log('response', response)
 
     if (response.status === 204) {
       yield put(

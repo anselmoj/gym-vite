@@ -9,7 +9,7 @@ import rootSagas from './rootSagas'
 const sagaMiddleware = createSagaMiddleware()
 
 const persistConfig = {
-  key: 'avaliacao_junior_3',
+  key: 'avaliacao',
 
   storage,
   whiteList: ['auth'],

@@ -8,7 +8,7 @@ import edit from './edit'
 import show from './show'
 import select from './selectAthlete'
 
-const sagas = all([
+const athleteSagas = all([
   takeLatest(athleteActions.listRequest, list),
   takeLatest(athleteActions.enableRequest, enable),
   takeLatest(athleteActions.disableRequest, disable),
@@ -18,4 +18,4 @@ const sagas = all([
   takeLatest(athleteActions.selectRequest, select),
 ])
 
-export default sagas
+export default athleteSagas

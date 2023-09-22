@@ -8,6 +8,7 @@ import {
 } from './styles'
 import IAthlete from '../../../../models/Athlete'
 import ComponentIsVisible from '../../../../components/utils/IsVisible'
+import EGender from '../../../../enums/Gender'
 
 interface IProps {
   athlete: IAthlete
@@ -15,11 +16,6 @@ interface IProps {
   openEnable: (data: IAthlete) => void
   openDisable: (data: IAthlete) => void
   position: number
-}
-
-enum IGender {
-  'Masculino' = 'M',
-  'Feminino' = 'F',
 }
 
 export default function AthleteList({
@@ -33,10 +29,10 @@ export default function AthleteList({
     <Container addColorRow={position % 2 === 0}>
       <Info>{athlete.id}</Info>
       <Info>{athlete.name}</Info>
-      <ComponentIsVisible when={athlete.gender === IGender.Masculino}>
+      <ComponentIsVisible when={athlete.gender === EGender.Masculino}>
         <Info>Masculino</Info>
       </ComponentIsVisible>
-      <ComponentIsVisible when={athlete.gender === IGender.Feminino}>
+      <ComponentIsVisible when={athlete.gender === EGender.Feminino}>
         <Info>Feminino</Info>
       </ComponentIsVisible>
       <ComponentIsVisible when={athlete.is_active === true}>

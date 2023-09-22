@@ -17,6 +17,7 @@ import InputBase, { InputBaseRefProps } from '../../../components/Input/Base'
 import InputCheckbox, {
   InputCheckboxRefProps,
 } from '../../../components/Input/Checkbox'
+import * as Yup from 'yup'
 
 export interface FormDataProps {
   name: string
@@ -39,6 +40,15 @@ interface IAthleteFormProps {
   initialData?: InitialData
   title: string
 }
+
+interface Errors {
+  [key: string]: string
+}
+
+const validation = Yup.object().shape({
+  name: Yup.string().required('Campo nome é obrigatório'),
+  gender: Yup.string().required('Campo gênero é obrigatório'),
+})
 
 const AthleteFormWithRef: React.ForwardRefRenderFunction<
   FormRefProps,
@@ -80,12 +90,49 @@ const AthleteFormWithRef: React.ForwardRefRenderFunction<
     inputGenderRef.current.setValue('')
   }
 
+  function setFormErrorValues(errors: {
+    [key in keyof FormDataProps]: string
+  }): void {
+    if (!inputNameRef.current) {
+      throw new Error('inputNameRef não encontrado')
+    }
+    if (!inputGenderRef.current) {
+      throw new Error('inputGenderRef não encontrado')
+    }
+    if (!inputIsActiveRef.current) {
+      throw new Error('inputIsActiveRef não encontrado')
+    }
+    inputNameRef.current.setError(errors.name || '')
+    inputGenderRef.current.setError(errors.gender || '')
+  }
+
+  function getErrors(errors: Yup.ValidationError): Errors {
+    const validationErros: Errors = {}
+
+    errors.inner.forEach((error) => {
+      validationErros[String(error.path)] = error.message
+    })
+    return validationErros
+  }
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
+    const formValues = getFormDataValues()
     try {
+      await validation.validate(formValues, {
+        abortEarly: false,
+      })
       onSubmit()
     } catch (error) {
-      throw new Error('Erro ao criar o atleta')
+      if (error instanceof Yup.ValidationError) {
+        const validationError = getErrors(error)
+        setFormErrorValues({
+          name: validationError.name,
+          gender: validationError.gender,
+          is_active: validationError.is_active,
+        })
+      }
+      throw new Error('Erro ao adicionar atleta')
     }
   }
 

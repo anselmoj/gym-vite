@@ -52,6 +52,7 @@ const AccessFormWithRef: ForwardRefRenderFunction<
   const inputSelectRef = useRef<InputSelectRefProps>(null)
   const inputTypeRef = useRef<InputBaseRefProps>(null)
   const [infoAccess, setInfoAccess] = useState<IAccessList[]>([])
+  console.log('infoAccess', infoAccess)
 
   const openModal = useCallback(() => {
     setHideModal(false)
@@ -89,15 +90,15 @@ const AccessFormWithRef: ForwardRefRenderFunction<
     }
   }
 
-  // const handleLoadAthleteListToSelect = useCallback(() => {
-  //   reduxDispatch(
-  //     athleteActions.selectRequest({
-  //       data: {
-  //         page: 1,
-  //       },
-  //     }),
-  //   )
-  // }, [reduxDispatch])
+  const handleLoadAthleteListToSelect = useCallback(() => {
+    reduxDispatch(
+      athleteActions.selectRequest({
+        data: {
+          page: 1,
+        },
+      }),
+    )
+  }, [reduxDispatch])
 
   useImperativeHandle(ref, () => ({
     open: openModal,
@@ -105,16 +106,16 @@ const AccessFormWithRef: ForwardRefRenderFunction<
     getValue: getFormDataValues,
   }))
 
-  // useEffect(() => {
-  //   handleLoadAthleteListToSelect()
-  // }, [handleLoadAthleteListToSelect])
+  useEffect(() => {
+    handleLoadAthleteListToSelect()
+  }, [handleLoadAthleteListToSelect])
 
   return (
     <>
       <Modal ref={componentModalBaseRef}>
         <Content className={hideModal ? 'hideModal' : ''} maxWidth={30}>
           <Title>Liberar atleta</Title>
-          <Form onSubmit={handleSubmit}>
+          <Form>
             <ItemsForm>
               <Items>
                 <InputSelect
@@ -136,7 +137,12 @@ const AccessFormWithRef: ForwardRefRenderFunction<
               >
                 Cancelar
               </Button>
-              <Button backgroundColor="#4ca35a" title="Salvar" type="submit">
+              <Button
+                onClick={handleSubmit}
+                backgroundColor="#4ca35a"
+                title="Salvar"
+                type="submit"
+              >
                 Confirmar
               </Button>
             </ContainerButton>
